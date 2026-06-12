@@ -1,0 +1,35 @@
+
+<div style="padding: 1rem 0;">
+<div style="display:flex;flex-wrap:wrap;gap:16px;margin-bottom:12px;font-size:12px;color:var(--color-text-secondary);">
+  <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:2px;background:#185FA5;"></span>Account share %</span>
+  <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:2px;background:#3B6D11;"></span>Revenue share %</span>
+</div>
+<div style="position:relative;width:100%;height:260px;">
+  <canvas id="segChart" role="img" aria-label="Grouped bar chart comparing account share versus revenue share across user segments. Group A has 2.2% of accounts but 16.6% of revenue.">Group A: 2.2% accounts, 16.6% revenue. Group B: 17% accounts, 75.3% revenue. Group E: 7% accounts, 5.1% revenue. Group C: 15.8% accounts, 2.9% revenue.</canvas>
+</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+new Chart(document.getElementById('segChart'), {
+  type: 'bar',
+  data: {
+    labels: ['Grup A\n(Active + MD)', 'Grup B\n(Active only)', 'Grup E\n(MD only)', 'Grup C\n(Passive)'],
+    datasets: [
+      { label: 'Account share %', data: [2.2, 17, 7, 15.8], backgroundColor: '#185FA5' },
+      { label: 'Revenue share %', data: [16.6, 75.3, 5.1, 2.9], backgroundColor: '#3B6D11' }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { font: { size: 11 } }, grid: { display: false } },
+      y: {
+        ticks: { font: { size: 11 }, callback: v => v + '%' },
+        grid: { color: 'rgba(0,0,0,0.06)' }
+      }
+    }
+  }
+});
+</script>
