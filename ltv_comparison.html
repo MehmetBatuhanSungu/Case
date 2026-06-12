@@ -1,0 +1,31 @@
+
+<div style="padding:1rem 0;">
+<div style="display:flex;flex-wrap:wrap;gap:16px;margin-bottom:12px;font-size:12px;color:var(--color-text-secondary);">
+  <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:2px;background:#185FA5;"></span>Monthly ARPU ($)</span>
+  <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:2px;background:#3B6D11;"></span>Avg LTV ($)</span>
+</div>
+<div style="position:relative;width:100%;height:280px;">
+<canvas id="ltvChart" role="img" aria-label="Grouped bar chart comparing monthly ARPU and LTV across user segments. Group A LTV is 73% higher than Group B despite similar ARPU.">Group A: ARPU 259, LTV 4257. Group B: ARPU 251, LTV 2460. Group E: ARPU 49, LTV 407. Group C: ARPU 10, LTV 104.</canvas>
+</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+new Chart(document.getElementById('ltvChart'),{
+  type:'bar',
+  data:{
+    labels:['Grup A\n(Active+MD)','Grup B\n(Active only)','Grup E\n(MD only)','Grup C\n(Passive)'],
+    datasets:[
+      {label:'Monthly ARPU ($)',data:[259,251,49,10],backgroundColor:'#185FA5'},
+      {label:'Avg LTV ($)',data:[4257,2460,407,104],backgroundColor:'#3B6D11'}
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>'$'+ctx.parsed.y.toLocaleString()}}},
+    scales:{
+      x:{ticks:{font:{size:11}},grid:{display:false}},
+      y:{ticks:{font:{size:11},callback:v=>'$'+v.toLocaleString()},grid:{color:'rgba(0,0,0,0.06)'}}
+    }
+  }
+});
+</script>
