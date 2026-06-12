@@ -1,0 +1,63 @@
+
+<div style="padding: 1rem 0;">
+<div style="display:flex;flex-wrap:wrap;gap:16px;margin-bottom:12px;font-size:12px;color:var(--color-text-secondary);">
+  <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:2px;background:#185FA5;"></span>Stock PFOF</span>
+  <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:2px;background:#3B6D11;"></span>Cash Interest</span>
+  <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:2px;background:#854F0B;"></span>Margin Interest</span>
+  <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:2px;background:#7F77DD;"></span>Market Data</span>
+  <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:2px;background:#D85A30;"></span>Options PFOF</span>
+  <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:2px;background:#B4B2A9;"></span>Other</span>
+</div>
+<div style="position:relative;width:100%;height:300px;">
+  <canvas id="revenueChart" role="img" aria-label="Stacked bar chart of monthly revenue by product from May 2023 to March 2025, showing growth from 384K to 1.39M dollars">Monthly revenue grew from 384K in May 2023 to 1.39M in March 2025.</canvas>
+</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const labels = ['May23','Jun23','Jul23','Aug23','Sep23','Oct23','Nov23','Dec23','Jan24','Feb24','Mar24','Apr24','May24','Jun24','Jul24','Aug24','Sep24','Oct24','Nov24','Dec24','Jan25','Feb25','Mar25'];
+const pfof =    [179,131,118,113,67,100,112,104,122,129,137,140,140,178,289,409,541,463,374,419,460,490,630];
+const cash =    [144,149,163,184,163,153,146,156,150,149,187,185,249,233,284,402,392,373,339,297,323,258,343];
+const margin =  [37,35,37,42,47,54,46,52,52,55,70,86,99,104,104,101,98,94,92,109,112,113,145];
+const mdata =   [0,0,0,0,0,0,0,0,35,39,46,48,53,59,64,66,71,75,77,83,92,99,109];
+const options_pfof = [0,0,0,0,0,0,0,0,0,0,0,0,7,11,42,22,20,62,47,54,60,46,65];
+const other =   [24,28,58,43,49,98,74,47,49,60,77,57,49,50,37,51,58,84,52,55,46,68,98];
+
+new Chart(document.getElementById('revenueChart'), {
+  type: 'bar',
+  data: {
+    labels,
+    datasets: [
+      { label: 'Stock PFOF', data: pfof, backgroundColor: '#185FA5', stack: 's' },
+      { label: 'Cash Interest', data: cash, backgroundColor: '#3B6D11', stack: 's' },
+      { label: 'Margin Interest', data: margin, backgroundColor: '#854F0B', stack: 's' },
+      { label: 'Market Data', data: mdata, backgroundColor: '#7F77DD', stack: 's' },
+      { label: 'Options PFOF', data: options_pfof, backgroundColor: '#D85A30', stack: 's' },
+      { label: 'Other', data: other, backgroundColor: '#B4B2A9', stack: 's' }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      annotation: {},
+      tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': $' + ctx.parsed.y + 'K' } }
+    },
+    scales: {
+      x: {
+        stacked: true,
+        ticks: { font: { size: 10 }, autoSkip: false, maxRotation: 45 },
+        grid: { display: false }
+      },
+      y: {
+        stacked: true,
+        ticks: {
+          font: { size: 11 },
+          callback: v => '$' + v + 'K'
+        },
+        grid: { color: 'rgba(0,0,0,0.06)' }
+      }
+    }
+  }
+});
+</script>
