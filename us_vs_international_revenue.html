@@ -1,0 +1,52 @@
+
+<div style="padding: 1rem 0;">
+<div style="display:flex;flex-wrap:wrap;gap:16px;margin-bottom:12px;font-size:12px;color:var(--color-text-secondary);">
+  <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:2px;background:#185FA5;"></span>USA %</span>
+  <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:2px;background:#D85A30;"></span>International %</span>
+</div>
+<div style="position:relative;width:100%;height:280px;">
+  <canvas id="geoChart" role="img" aria-label="Line chart showing USA revenue share declining from 76% to 51% while international share grows, with a notable dip to 34% USA share in September 2024.">USA share fell from 76% in May 2023 to a low of 34% in September 2024, recovering to 51% by April 2025.</canvas>
+</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const gLabels = ['May23','Jul23','Sep23','Nov23','Jan24','Mar24','May24','Jul24','Sep24','Nov24','Jan25','Mar25','Apr25'];
+const usa =   [76,74,75,69,73,60,59,50,34,51,50,49,51];
+const intl =  [24,26,25,31,27,40,41,50,66,49,50,51,49];
+new Chart(document.getElementById('geoChart'), {
+  type: 'line',
+  data: {
+    labels: gLabels,
+    datasets: [
+      {
+        label: 'USA %',
+        data: usa,
+        borderColor: '#185FA5', backgroundColor: 'rgba(24,95,165,0.08)',
+        fill: true, tension: 0.3, pointRadius: 3, borderWidth: 2
+      },
+      {
+        label: 'International %',
+        data: intl,
+        borderColor: '#D85A30', backgroundColor: 'rgba(216,90,48,0.08)',
+        fill: true, tension: 0.3, pointRadius: 3, borderWidth: 2
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + ctx.parsed.y + '%' } }
+    },
+    scales: {
+      x: { ticks: { font: { size: 10 }, autoSkip: false, maxRotation: 45 }, grid: { display: false } },
+      y: {
+        min: 0, max: 100,
+        ticks: { font: { size: 11 }, callback: v => v + '%' },
+        grid: { color: 'rgba(0,0,0,0.06)' }
+      }
+    }
+  }
+});
+</script>
