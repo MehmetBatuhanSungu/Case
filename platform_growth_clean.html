@@ -1,0 +1,50 @@
+
+<style>
+.metric-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px;}
+.metric-card{background:var(--color-background-secondary);border-radius:8px;padding:12px 14px;}
+.metric-label{font-size:11px;color:var(--color-text-secondary);margin-bottom:4px;}
+.metric-value{font-size:20px;font-weight:500;color:var(--color-text-primary);}
+.metric-sub{font-size:11px;color:var(--color-text-tertiary);margin-top:2px;}
+.metric-up{color:#3B6D11;}
+.legend{display:flex;gap:16px;margin-bottom:10px;font-size:12px;color:var(--color-text-secondary);}
+.leg-sq{width:10px;height:10px;border-radius:2px;display:inline-block;margin-right:4px;vertical-align:middle;}
+.leg-dash{width:18px;height:0;border-top:2px dashed;display:inline-block;margin-right:4px;vertical-align:middle;}
+</style>
+<div class="metric-grid">
+  <div class="metric-card"><div class="metric-label">Peak monthly revenue</div><div class="metric-value">$1.39M</div><div class="metric-sub">Mar 2025</div></div>
+  <div class="metric-card"><div class="metric-label">24-month growth</div><div class="metric-value metric-up">+261%</div><div class="metric-sub">3.6x increase</div></div>
+  <div class="metric-card"><div class="metric-label">Active users (Apr 25)</div><div class="metric-value">7,150</div><div class="metric-sub">+86% vs May 2023</div></div>
+  <div class="metric-card"><div class="metric-label">Monthly ARPU</div><div class="metric-value">$185</div><div class="metric-sub">vs $100 in May 2023</div></div>
+</div>
+<div class="legend">
+  <span><span class="leg-sq" style="background:#378ADD;"></span>Monthly revenue ($K)</span>
+  <span><span class="leg-dash" style="border-color:#BA7517;"></span>Active users</span>
+</div>
+<div style="position:relative;width:100%;height:260px;">
+<canvas id="gc" role="img" aria-label="Revenue and active user growth from May 2023 to March 2025">Revenue grew from 384K to 1390K. Active users grew from 3842 to 6940.</canvas>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const m=['May23','Jun23','Jul23','Aug23','Sep23','Oct23','Nov23','Dec23','Jan24','Feb24','Mar24','Apr24','May24','Jun24','Jul24','Aug24','Sep24','Oct24','Nov24','Dec24','Jan25','Feb25','Mar25'];
+const r=[384,343,358,382,326,405,378,359,408,431,517,516,597,634,819,1051,1180,1151,981,1017,1093,1074,1390];
+const u=[3842,3930,3971,4095,4080,4105,4143,4239,5103,5233,5400,5409,5561,5556,5792,5923,5880,6086,6106,6283,6491,6415,6940];
+new Chart(document.getElementById('gc'),{
+  type:'bar',
+  data:{
+    labels:m,
+    datasets:[
+      {type:'bar',label:'Revenue ($K)',data:r,backgroundColor:'rgba(55,138,221,0.65)',borderColor:'rgba(55,138,221,0.9)',borderWidth:0.5,yAxisID:'y'},
+      {type:'line',label:'Active users',data:u,borderColor:'#BA7517',borderDash:[5,3],borderWidth:1.5,pointRadius:2,pointBackgroundColor:'#BA7517',backgroundColor:'transparent',yAxisID:'y2'}
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false}},
+    scales:{
+      x:{ticks:{font:{size:9},color:'#888780',autoSkip:false,maxRotation:45},grid:{display:false},border:{display:false}},
+      y:{position:'left',ticks:{font:{size:10},color:'#888780',callback:v=>'$'+v+'K'},grid:{color:'rgba(136,135,128,0.12)'},border:{display:false}},
+      y2:{position:'right',ticks:{font:{size:10},color:'#888780',callback:v=>v.toLocaleString()},grid:{display:false},border:{display:false}}
+    }
+  }
+});
+</script>
