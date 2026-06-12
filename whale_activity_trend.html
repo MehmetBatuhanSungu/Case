@@ -1,0 +1,57 @@
+
+<div style="padding: 1rem 0;">
+<div style="display:flex;flex-wrap:wrap;gap:16px;margin-bottom:12px;font-size:12px;color:var(--color-text-secondary);">
+  <span style="display:flex;align-items:center;gap:4px;"><span style="width:18px;height:2px;background:#7F77DD;display:inline-block;"></span>Lifetime whales</span>
+  <span style="display:flex;align-items:center;gap:4px;"><span style="width:18px;height:2px;background:#3B6D11;display:inline-block;"></span>Active (1K+)</span>
+  <span style="display:flex;align-items:center;gap:4px;"><span style="width:18px;height:2px;background:#EF9F27;border-top:2px dashed #EF9F27;display:inline-block;"></span>Downgraded</span>
+  <span style="display:flex;align-items:center;gap:4px;"><span style="width:18px;height:2px;background:#E24B4A;border-top:2px dashed #E24B4A;display:inline-block;"></span>Dormant</span>
+</div>
+<div style="position:relative;width:100%;height:280px;">
+  <canvas id="whaleChart" role="img" aria-label="Line chart showing whale activity trends from May 2023 to March 2025. Lifetime whales grow steadily while active whale count remains low.">Lifetime whales grew from 18 to 470 while active whales remained between 10 and 25.</canvas>
+</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const wLabels = ['May23','Jul23','Sep23','Nov23','Jan24','Mar24','May24','Jul24','Sep24','Nov24','Jan25','Mar25'];
+new Chart(document.getElementById('whaleChart'), {
+  type: 'line',
+  data: {
+    labels: wLabels,
+    datasets: [
+      {
+        label: 'Lifetime whales',
+        data: [18,36,59,65,79,99,113,130,155,163,184,195],
+        borderColor: '#7F77DD', backgroundColor: 'rgba(127,119,221,0.08)',
+        fill: true, tension: 0.3, pointRadius: 3, borderWidth: 2
+      },
+      {
+        label: 'Active (1K+)',
+        data: [17,14,10,9,16,24,18,21,19,18,21,24],
+        borderColor: '#3B6D11', backgroundColor: 'transparent',
+        tension: 0.3, pointRadius: 3, borderWidth: 2
+      },
+      {
+        label: 'Downgraded',
+        data: [78,84,85,76,75,79,80,77,121,118,124,124],
+        borderColor: '#EF9F27', backgroundColor: 'transparent',
+        borderDash: [5,3], tension: 0.3, pointRadius: 2, borderWidth: 1.5
+      },
+      {
+        label: 'Dormant',
+        data: [104,93,90,78,64,60,59,63,48,40,42,46],
+        borderColor: '#E24B4A', backgroundColor: 'transparent',
+        borderDash: [4,3], tension: 0.3, pointRadius: 2, borderWidth: 1.5
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { font: { size: 10 }, autoSkip: false, maxRotation: 45 }, grid: { display: false } },
+      y: { ticks: { font: { size: 11 } }, grid: { color: 'rgba(0,0,0,0.06)' } }
+    }
+  }
+});
+</script>
