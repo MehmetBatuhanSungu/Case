@@ -1,0 +1,82 @@
+
+<div style="padding:1rem 0;">
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px;">
+  <div style="background:var(--color-background-secondary);border-radius:8px;padding:12px 14px;">
+    <div style="font-size:11px;color:var(--color-text-secondary);margin-bottom:4px;">Peak monthly revenue</div>
+    <div style="font-size:22px;font-weight:500;color:var(--color-text-primary);">$1.39M</div>
+    <div style="font-size:11px;color:var(--color-text-secondary);margin-top:2px;">Mar 2025</div>
+  </div>
+  <div style="background:var(--color-background-secondary);border-radius:8px;padding:12px 14px;">
+    <div style="font-size:11px;color:var(--color-text-secondary);margin-bottom:4px;">24-month growth</div>
+    <div style="font-size:22px;font-weight:500;color:#3B6D11;">+261%</div>
+    <div style="font-size:11px;color:var(--color-text-secondary);margin-top:2px;">3.6x increase</div>
+  </div>
+  <div style="background:var(--color-background-secondary);border-radius:8px;padding:12px 14px;">
+    <div style="font-size:11px;color:var(--color-text-secondary);margin-bottom:4px;">Active users (Apr 25)</div>
+    <div style="font-size:22px;font-weight:500;color:var(--color-text-primary);">7,150</div>
+    <div style="font-size:11px;color:var(--color-text-secondary);margin-top:2px;">+86% vs May 2023</div>
+  </div>
+  <div style="background:var(--color-background-secondary);border-radius:8px;padding:12px 14px;">
+    <div style="font-size:11px;color:var(--color-text-secondary);margin-bottom:4px;">Monthly ARPU</div>
+    <div style="font-size:22px;font-weight:500;color:var(--color-text-primary);">$185</div>
+    <div style="font-size:11px;color:var(--color-text-secondary);margin-top:2px;">vs $100 in May 2023</div>
+  </div>
+</div>
+
+<div style="display:flex;flex-wrap:wrap;gap:16px;margin-bottom:10px;font-size:12px;color:var(--color-text-secondary);">
+  <span style="display:flex;align-items:center;gap:4px;"><span style="width:10px;height:10px;border-radius:2px;background:#185FA5;"></span>Monthly revenue ($K)</span>
+  <span style="display:flex;align-items:center;gap:4px;"><span style="width:18px;height:2px;background:#EF9F27;border-top:2px dashed #EF9F27;display:inline-block;"></span>Active users</span>
+</div>
+<div style="position:relative;width:100%;height:260px;">
+<canvas id="growthChart" role="img" aria-label="Dual axis chart showing monthly revenue and active user count from May 2023 to March 2025. Revenue grew faster than user count indicating ARPU improvement.">Revenue grew from 384K to 1390K while active users grew from 3842 to 6940.</canvas>
+</div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const months=['May23','Jun23','Jul23','Aug23','Sep23','Oct23','Nov23','Dec23','Jan24','Feb24','Mar24','Apr24','May24','Jun24','Jul24','Aug24','Sep24','Oct24','Nov24','Dec24','Jan25','Feb25','Mar25'];
+const rev=[384,343,358,382,326,405,378,359,408,431,517,516,597,634,819,1051,1180,1151,981,1017,1093,1074,1390];
+const users=[3842,3930,3971,4095,4080,4105,4143,4239,5103,5233,5400,5409,5561,5556,5792,5923,5880,6086,6106,6283,6491,6415,6940];
+new Chart(document.getElementById('growthChart'),{
+  type:'bar',
+  data:{
+    labels:months,
+    datasets:[
+      {
+        type:'bar',
+        label:'Revenue ($K)',
+        data:rev,
+        backgroundColor:'rgba(24,95,165,0.7)',
+        yAxisID:'y'
+      },
+      {
+        type:'line',
+        label:'Active users',
+        data:users,
+        borderColor:'#EF9F27',
+        borderDash:[4,3],
+        borderWidth:2,
+        pointRadius:2,
+        backgroundColor:'transparent',
+        yAxisID:'y2'
+      }
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false}},
+    scales:{
+      x:{ticks:{font:{size:10},autoSkip:false,maxRotation:45},grid:{display:false}},
+      y:{
+        position:'left',
+        ticks:{font:{size:10},callback:v=>'$'+v+'K'},
+        grid:{color:'rgba(0,0,0,0.06)'}
+      },
+      y2:{
+        position:'right',
+        ticks:{font:{size:10},callback:v=>v.toLocaleString()},
+        grid:{display:false}
+      }
+    }
+  }
+});
+</script>
